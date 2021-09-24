@@ -82,6 +82,7 @@
 
 {% block extra-script %}
 <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     var vm = new Vue({
         //장고랑 에러 해결
@@ -94,10 +95,29 @@
                 {name: '박준영', todo: 'Django, vue.js활용한 코딩'}
             ],
         },
+        created: function () {
+            console.log('created()...');
+            this.fetch_all_todo();
+        },
         methods: {
+            fetch_all_todo: function () {
+                console.log('fetch_all_todo()...')
+
+                var vm = this;
+                axios.get('/api/todo/list/')
+                //  성공
+                    .then(function (res) {
+                        console.log("GET RES", res);
+                        vm.todoList = res.data;
+                    })
+                // 실패
+                    .catch(function (err){
+                        console.log("GET ERR", err);
+                    })
+            },
             add_todo: function() {
                 console.log("add_todo()...");
-                if (this.name == '') this. name = '사용자';
+                if (this.name == '') this.name = '사용자';
                 if (this.todo == '') return;
 
                 this.todoList.push({name: this.name, todo: this.todo});
