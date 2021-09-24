@@ -6,4 +6,5 @@ app_name = 'todo'
 
 urlpatterns = [
     path('', views.TodoTV.as_view(), name='index')
+    
 ]

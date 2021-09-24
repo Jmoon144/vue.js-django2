@@ -91,9 +91,7 @@
         data: {
             name: '',
             todo: '',
-            todoList:[
-                {name: '박준영', todo: 'Django, vue.js활용한 코딩'}
-            ],
+            todoList:[],
         },
         created: function () {
             console.log('created()...');
@@ -121,7 +119,8 @@
                 if (this.todo == '') return;
 
                 this.todoList.push({name: this.name, todo: this.todo});
-                this.name = this.todo = '';
+                this.name = '';
+                this.todo = '';
               
             },
             remove_todo: function(index) {
