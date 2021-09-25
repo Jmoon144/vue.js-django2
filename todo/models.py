@@ -10,5 +10,5 @@ class Todo(models.Model):
     def save(self, force_insert=False, force_update=False, using=None,
             update_file=None):
         if not self.name:
-            self.name = '박준영'
+            self.name = '사용자'
         super().save()
