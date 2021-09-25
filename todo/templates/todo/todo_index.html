@@ -84,6 +84,9 @@
 <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+    axios.defaults.xsrfCookieName = 'csrftoken';
+    axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+
     var vm = new Vue({
         //장고랑 에러 해결
         delimiters: ['[[', ']]'],
@@ -120,7 +123,7 @@
 
                 var vm = this;
                 var postData = {name: this.name, todo: this.todo}
-                axios.post('/api/todo/create/', postData)
+                axios.post('/api/todo/create/', postData, {xsrfCookieName: 'csrftoken', xsrfHeaderName: 'X-CSRFToken'})
                     .then(function(res) {
                         console.log("POST RES", res);
                         vm.todoList.push({id: res.data.id, name: res.data.name, todo: res.data.todo});
@@ -133,6 +136,8 @@
             },
             remove_todo: function(todo, index) {
                 console.log("remove_todo()....", index);
+                //팝업창
+                if (confirm("삭제하시겠습니까?") == false) return;
 
                 var vm = this;
                 axios.delete('/api/todo/' + todo.id + '/delete/')

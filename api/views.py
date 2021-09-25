@@ -2,12 +2,13 @@ import json
 from django.forms.models import model_to_dict
 from django.http.response import JsonResponse
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.views.generic.edit import BaseCreateView, BaseDeleteView
 from django.views.generic.list import BaseListView
 
 from todo.models import Todo
 
+@method_decorator(ensure_csrf_cookie, name='dispatch')
 class ApiTodoLV(BaseListView):
     model = Todo
     # template_name = 
